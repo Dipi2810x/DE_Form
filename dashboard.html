@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+   
+  </style>
+</head>
+<body>
+  
+  <div style="text-align:center; margin-top:32px;">
+    <img src="logo.png" alt="Logo" style="max-width:400px; height:auto;">
+  </div>
+  <h2 style="text-align:center; color:#7ec4cf; margin-top:24px;">Dashboard</h2>
+  <div class="dashboard-container">
+    <div class="tabs">
+      <button class="tab-btn active" data-type="All">All</button>
+      <button class="tab-btn" data-type="Engineering/Computer Science">Engineering/Computer Science</button>
+      <button class="tab-btn" data-type="Mathematics/Theoretical">Mathematics/Theoretical</button>
+      <button class="tab-btn" data-type="Scientific Investigation">Scientific Investigation</button>
+      <button class="tab-btn" data-type="Social Sciences">Social Sciences</button>
+      <button class="tab-btn" data-type="Stats">Stats</button>
+    </div>
+    <div id="responses"></div>
+    <div style="text-align:center; margin-top:32px;">
+      <button onclick="window.location.href='index.html'">Back to Home</button>
+    </div>
+    <button class="logout-btn" onclick="sessionStorage.removeItem('dashboard_auth'); window.location.href='login.html';">Logout</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+if (sessionStorage.getItem('dashboard_auth') !== 'yes') {
+  window.location.href = 'login.html';
+}
+
+let allSubmissions = [];
+let lastTab = "All";
+let statsCharts = [];
+
+function renderTable(submissions, summaryMode = false) {
+  if (!submissions.length) {
+    return '<p>No submissions yet.</p>';
+  }
+  if (!summaryMode) {
+    // Original "All" tab table
+    let html = `<table>
+      <tr>
+        <th>Project ID</th>
+        <th>Region</th>
+        <th>Judge's Name</th>
+        <th>Convener's Name</th>
+        <th>Date</th>
+        <th>School</th>
+        <th>Learner 1 Name</th>
+        <th>Learner 1 Surname</th>
+        <th>Learner 1 Grade</th>
+        <th>Learner 2 Name</th>
+        <th>Learner 2 Surname</th>
+        <th>Learner 2 Grade</th>
+        <th>Project Title</th>
+        <th>Project Type</th>
+        <th>Category</th>
+        <th>Q1.1</th>
+        <th>Q1.2</th>
+        <th>Q1.3</th>
+        <th>Q2.4</th>
+        <th>Q2.5</th>
+        <th>Q2.6</th>
+        <th>Q2.7</th>
+        <th>Q3.8</th>
+        <th>Q3.9</th>
+        <th>Q3.10</th>
+        <th>Q3.11</th>
+        <th>Q3.12</th>
+        <th>Q3.13</th>
+        <th>Q3.14</th>
+        <th>Q4.15</th>
+        <th>Q4.16</th>
+        <th>Q4.17</th>
+        <th>Q5.18</th>
+        <th>Q5.19</th>
+        <th>Q6.20</th>
+        <th>Q6.21</th>
+        <th>Q6.22</th>
+        <th>Q6.23</th>
+        <th>Q6.24</th>
+        <th>Q6.25</th>
+        <th>Plagiarism Comment</th>
+        <th>Improvements suggested</th>
+        <th>Mentor Recommended</th>
+      </tr>`;
+    submissions.forEach(sub => {
+      html += `<tr>
+        <td>${sub.project_id || ''}</td>
+        <td>${sub.region || ''}</td>
+        <td>${sub.judges_name || ''}</td>
+        <td>${sub.conveners_name || ''}</td>
+        <td>${sub.date || ''}</td>
+        <td>${sub.school || ''}</td>
+        <td>${sub.learner1_name || ''}</td>
+        <td>${sub.learner1_surname || ''}</td>
+        <td>${sub.learner1_grade || ''}</td>
+        <td>${sub.learner2_name || ''}</td>
+        <td>${sub.learner2_surname || ''}</td>
+        <td>${sub.learner2_grade || ''}</td>
+        <td>${sub.project_title || ''}</td>
+        <td>${sub.project_type || ''}</td>
+        <td>${sub.category || ''}</td>
+        <td>${sub["1.1"] || ''}</td>
+        <td>${sub["1.2"] || ''}</td>
+        <td>${sub["1.3"] || ''}</td>
+        <td>${sub["2.4"] || ''}</td>
+        <td>${sub["2.5"] || ''}</td>
+        <td>${sub["2.6"] || ''}</td>
+        <td>${sub["2.7"] || ''}</td>
+        <td>${sub["3.8"] || ''}</td>
+        <td>${sub["3.9"] || ''}</td>
+        <td>${sub["3.10"] || ''}</td>
+        <td>${sub["3.11"] || ''}</td>
+        <td>${sub["3.12"] || ''}</td>
+        <td>${sub["3.13"] || ''}</td>
+        <td>${sub["3.14"] || ''}</td>
+        <td>${sub["4.15"] || ''}</td>
+        <td>${sub["4.16"] || ''}</td>
+        <td>${sub["4.17"] || ''}</td>
+        <td>${sub["5.18"] || ''}</td>
+        <td>${sub["5.19"] || ''}</td>
+        <td>${sub["6.20"] || ''}</td>
+        <td>${sub["6.21"] || ''}</td>
+        <td>${sub["6.22"] || ''}</td>
+        <td>${sub["6.23"] || ''}</td>
+        <td>${sub["6.24"] || ''}</td>
+        <td>${sub["6.25"] || ''}</td>
+        <td>${sub.extr_1 || ''}</td>
+        <td>${sub.extr_2 || ''}</td>
+        <td>${sub.extr_3 || ''}</td>
+      </tr>`;
+    });
+    html += '</table>';
+    return html;
+  } else {
+    // Summary table for project type tabs
+    let html = `<table>
+      <tr>
+        <th>Project ID</th>
+        <th>Project Title</th>
+        <th>Section 1</th>
+        <th>Section 2</th>
+        <th>Section 3</th>
+        <th>Section 4</th>
+        <th>Section 5</th>
+        <th>Section 6</th>
+        <th>Plagiarism/other ethics violations</th>
+        <th>Improvements suggested</th>
+        <th>Mentor Recommended</th>
+        <th>Final Mark</th>
+      </tr>`;
+    submissions.forEach(sub => {
+      // Helper to safely sum fields
+      function sumFields(fields) {
+        return fields.reduce((sum, key) => sum + (parseInt(sub[key]) || 0), 0);
+      }
+      const section1 = sumFields(["1.1", "1.2", "1.3"]);
+      const section2 = sumFields(["2.4", "2.5", "2.6", "2.7"]);
+      const section3 = sumFields(["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]);
+      const section4 = sumFields(["4.15", "4.16", "4.17"]);
+      const section5 = sumFields(["5.18", "5.19"]);
+      const section6 = sumFields(["6.21", "6.22", "6.23", "6.24", "6.25"]);
+      const finalMark = section1 + section2 + section3 + section4 + section5 + section6;
+      html += `<tr>
+        <td>${sub.project_id || ''}</td>
+        <td>${sub.project_title || ''}</td>
+        <td>${section1}</td>
+        <td>${section2}</td>
+        <td>${section3}</td>
+        <td>${section4}</td>
+        <td>${section5}</td>
+        <td>${section6}</td>
+        <td>${sub.extr_1 || ''}</td>
+        <td>${sub.extr_2 || ''}</td>
+        <td>${sub.extr_3 || ''}</td>
+        <td>${finalMark}</td>
+      </tr>`;
+    });
+    html += '</table>';
+    return html;
+  }
+}
+
+function renderStats(submissions) {
+  // Unique projects by project_id (ignoring multiple markings)
+  const projectMap = {};
+  submissions.forEach(sub => {
+    if (!sub.project_id) return;
+    if (!projectMap[sub.project_id]) projectMap[sub.project_id] = [];
+    projectMap[sub.project_id].push(sub);
+  });
+  const uniqueProjects = Object.values(projectMap).map(arr => arr[0]);
+
+  // Individual vs Group
+  let individual = 0, group = 0;
+  uniqueProjects.forEach(proj => {
+    const hasLearner2 = (proj.learner2_name && proj.learner2_name.trim()) || (proj.learner2_surname && proj.learner2_surname.trim());
+    if (hasLearner2) group++;
+    else individual++;
+  });
+
+  // Learners per grade
+  const gradeCounts = {};
+  uniqueProjects.forEach(proj => {
+    if (proj.learner1_grade) gradeCounts[proj.learner1_grade] = (gradeCounts[proj.learner1_grade] || 0) + 1;
+    if (proj.learner2_grade && proj.learner2_grade.trim()) gradeCounts[proj.learner2_grade] = (gradeCounts[proj.learner2_grade] || 0) + 1;
+  });
+
+  // Projects per category
+  const categoryCounts = {};
+  uniqueProjects.forEach(proj => {
+    if (proj.category) categoryCounts[proj.category] = (categoryCounts[proj.category] || 0) + 1;
+  });
+
+  // Projects per project_type (use canonical names)
+  const typeCanonical = {
+    "engineering/computer science": "Engineering/Computer Science",
+    "mathematics/theoretical": "Mathematics/Theoretical",
+    "scientific investigation": "Scientific Investigation",
+    "social sciences": "Social Sciences"
+  };
+  const typeCounts = {
+    "Engineering/Computer Science": 0,
+    "Mathematics/Theoretical": 0,
+    "Scientific Investigation": 0,
+    "Social Sciences": 0
+  };
+  uniqueProjects.forEach(proj => {
+    if (proj.project_type) {
+      let key = (proj.project_type || '').trim().toLowerCase();
+      if (typeCanonical[key]) typeCounts[typeCanonical[key]]++;
+    }
+  });
+
+  // Projects per region
+  const regionCounts = {};
+  uniqueProjects.forEach(proj => {
+    if (proj.region) regionCounts[proj.region] = (regionCounts[proj.region] || 0) + 1;
+  });
+
+  // Most common school
+  const schoolCounts = {};
+  uniqueProjects.forEach(proj => {
+    if (proj.school) schoolCounts[proj.school] = (schoolCounts[proj.school] || 0) + 1;
+  });
+  const mostCommonSchool = Object.entries(schoolCounts).sort((a, b) => b[1] - a[1])[0];
+
+  // Build HTML
+  let html = `
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:32px; margin-bottom:32px;">
+      <div style="background:#1b3a5d; color:#FFD700; border-radius:16px; padding:24px; min-width:220px; box-shadow:0 2px 12px rgba(30,60,120,0.10);">
+        <div style="font-size:2.2em; font-weight:bold;">${uniqueProjects.length}</div>
+        <div style="font-size:1.1em;">Total Unique Projects</div>
+      </div>
+      <div style="background:#1b3a5d; color:#FFD700; border-radius:16px; padding:24px; min-width:220px; box-shadow:0 2px 12px rgba(30,60,120,0.10);">
+        <div style="font-size:2.2em; font-weight:bold;">${individual}</div>
+        <div style="font-size:1.1em;">Individual Projects</div>
+      </div>
+      <div style="background:#1b3a5d; color:#FFD700; border-radius:16px; padding:24px; min-width:220px; box-shadow:0 2px 12px rgba(30,60,120,0.10);">
+        <div style="font-size:2.2em; font-weight:bold;">${group}</div>
+        <div style="font-size:1.1em;">Group Projects</div>
+      </div>
+      <div style="background:#1b3a5d; color:#FFD700; border-radius:16px; padding:24px; min-width:220px; box-shadow:0 2px 12px rgba(30,60,120,0.10);">
+        <div style="font-size:2.2em; font-weight:bold;">${Object.keys(gradeCounts).reduce((a, b) => a + gradeCounts[b], 0)}</div>
+        <div style="font-size:1.1em;">Total Learners</div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:48px; justify-items:center; align-items:start; margin:48px 0;">
+      <div style="width:100%; max-width:650px; background:#112d4e; border-radius:18px; padding:24px;">
+        <canvas id="gradesChart" width="600" height="340"></canvas>
+        <div style="text-align:center; color:#FFD700; margin-top:14px; font-size:1.2em; font-weight:bold;">Learners per Grade</div>
+      </div>
+      <div style="width:100%; max-width:650px; background:#112d4e; border-radius:18px; padding:24px;">
+        <canvas id="categoryChart" width="600" height="340"></canvas>
+        <div style="text-align:center; color:#FFD700; margin-top:14px; font-size:1.2em; font-weight:bold;">Projects per Category</div>
+      </div>
+      <div style="width:100%; max-width:650px; background:#112d4e; border-radius:18px; padding:24px;">
+        <canvas id="typeChart" width="600" height="340"></canvas>
+        <div style="text-align:center; color:#FFD700; margin-top:14px; font-size:1.2em; font-weight:bold;">Projects per Project Type</div>
+      </div>
+      <div style="width:100%; max-width:650px; background:#112d4e; border-radius:18px; padding:24px;">
+        <canvas id="regionChart" width="600" height="340"></canvas>
+        <div style="text-align:center; color:#FFD700; margin-top:14px; font-size:1.2em; font-weight:bold;">Projects per Region</div>
+      </div>
+    </div>
+    <div style="margin-top:32px; text-align:center;">
+      <span style="color:#FFD700; font-weight:bold;">Most Common School:</span>
+      <span style="color:#fff;">${mostCommonSchool ? mostCommonSchool[0] + " (" + mostCommonSchool[1] + ")" : "N/A"}</span>
+    </div>
+  `;
+
+  setTimeout(() => {
+    // Destroy old charts if present
+    statsCharts.forEach(c => c.destroy && c.destroy());
+    statsCharts = [];
+    // Grades chart
+    const gradesCtx = document.getElementById('gradesChart').getContext('2d');
+    statsCharts.push(new Chart(gradesCtx, {
+      type: 'bar',
+      data: {
+        labels: Object.keys(gradeCounts),
+        datasets: [{
+          label: 'Learners',
+          data: Object.values(gradeCounts),
+          backgroundColor: '#FFD700'
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: true, labels: { color: '#fff', font: { size: 18, weight: 'bold' } } },
+          title: { display: false },
+          tooltip: { enabled: true },
+          datalabels: {
+            display: true,
+            color: '#fff',
+            font: { weight: 'bold', size: 18 }
+          }
+        },
+        scales: {
+          x: { ticks: { color: '#fff', font: { size: 18, weight: 'bold' } } },
+          y: { beginAtZero: true, ticks: { color: '#fff', font: { size: 18, weight: 'bold' } } }
+        }
+      },
+      plugins: [window.ChartDataLabels]
+    }));
+    // Category chart
+    const catCtx = document.getElementById('categoryChart').getContext('2d');
+    statsCharts.push(new Chart(catCtx, {
+      type: 'pie',
+      data: {
+        labels: Object.keys(categoryCounts),
+        datasets: [{
+          data: Object.values(categoryCounts),
+          backgroundColor: ['#FFD700', '#7ec4cf', '#1b3a5d', '#112d4e', '#f0f4f8', '#ffb300']
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: true, position: 'right', labels: { color: '#fff', font: { size: 18, weight: 'bold' } } },
+          tooltip: { enabled: true },
+          datalabels: {
+            display: true,
+            color: '#fff',
+            font: { weight: 'bold', size: 18 },
+            formatter: (value, ctx) => value
+          }
+        }
+      },
+      plugins: [window.ChartDataLabels]
+    }));
+    // Type chart
+    const typeCtx = document.getElementById('typeChart').getContext('2d');
+    statsCharts.push(new Chart(typeCtx, {
+      type: 'doughnut',
+      data: {
+        labels: Object.keys(typeCounts),
+        datasets: [{
+          data: Object.values(typeCounts),
+          backgroundColor: ['#FFD700', '#7ec4cf', '#1b3a5d', '#112d4e']
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: true, position: 'right', labels: { color: '#fff', font: { size: 18, weight: 'bold' } } },
+          tooltip: { enabled: true },
+          datalabels: {
+            display: true,
+            color: '#fff',
+            font: { weight: 'bold', size: 18 },
+            formatter: (value, ctx) => value
+          }
+        }
+      },
+      plugins: [window.ChartDataLabels]
+    }));
+    // Region chart
+    const regionCtx = document.getElementById('regionChart').getContext('2d');
+    statsCharts.push(new Chart(regionCtx, {
+      type: 'bar',
+      data: {
+        labels: Object.keys(regionCounts),
+        datasets: [{
+          label: 'Projects',
+          data: Object.values(regionCounts),
+          backgroundColor: '#7ec4cf'
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: true, labels: { color: '#fff', font: { size: 18, weight: 'bold' } } },
+          tooltip: { enabled: true },
+          datalabels: {
+            display: true,
+            color: '#fff',
+            font: { weight: 'bold', size: 18 }
+          }
+        },
+        scales: {
+          x: { ticks: { color: '#fff', font: { size: 18, weight: 'bold' } } },
+          y: { beginAtZero: true, ticks: { color: '#fff', font: { size: 18, weight: 'bold' } } }
+        }
+      },
+      plugins: [window.ChartDataLabels]
+    }));
+  }, 100);
+
+  return html;
+}
+
+// Add Chart.js datalabels plugin
+(function(){
+  if (!window.ChartDataLabels) {
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js';
+    script.onload = function(){};
+    document.head.appendChild(script);
+  }
+})();
+
+async function fetchAndRender(type = "All") {
+  const responsesDiv = document.getElementById('responses');
+  if (!allSubmissions.length) {
+    try {
+      const res = await fetch('https://sheetdb.io/api/v1/rn4vpf7g0o20e');
+      allSubmissions = await res.json();
+    } catch (err) {
+      responsesDiv.innerHTML = '<p>Error loading submissions.</p>';
+      return;
+    }
+  }
+  let filtered = allSubmissions;
+  let summaryMode = false;
+  if (type === "Stats") {
+    responsesDiv.innerHTML = renderStats(allSubmissions);
+    return;
+  }
+  if (type !== "All") {
+    filtered = allSubmissions.filter(sub => (sub.project_type || '').trim().toLowerCase() === type.trim().toLowerCase());
+    // Sort by project_id ascending (numeric if possible, else string)
+    filtered.sort((a, b) => {
+      const aNum = parseInt(a.project_id);
+      const bNum = parseInt(b.project_id);
+      if (!isNaN(aNum) && !isNaN(bNum)) {
+        return aNum - bNum;
+      } else {
+        return (a.project_id || '').localeCompare(b.project_id || '');
+      }
+    });
+    summaryMode = true;
+  }
+  responsesDiv.innerHTML = renderTable(filtered, summaryMode);
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    lastTab = this.getAttribute('data-type');
+    fetchAndRender(lastTab);
+  });
+});
+
+// Initial load
+fetchAndRender("All");
+
+// Auto-refresh every 3 minutes
+setInterval(async () => {
+  allSubmissions = [];
+  await fetchAndRender(lastTab);
+}, 180000);
+</script>
+ </body>
+</html>

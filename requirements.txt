@@ -1,0 +1,2 @@
+# No external dependencies required
+# The scraper uses only Python standard library modules

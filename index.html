@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    @keyframes sparkle {
+      0% { filter: brightness(1); }
+      100% { filter: brightness(1.18) drop-shadow(0 0 8px #FFD700); }
+    }
+  </style>
+</head>
+<body>
+  <div style="text-align:center; margin-top:32px;">
+    <img src="logo.png" alt="Logo" class="logo-img">
+  </div>
+
+  <div class="dashboard-container" style="text-align:center;">
+    <button onclick="window.location.href='form.html'">Submit Form</button>
+    <button onclick="window.location.href='login.html'">View Dashboard</button>
+  </div>
+
+  <div style="text-align:center; margin-top:24px;">
+    <span style="
+      display: inline-block;
+      background: linear-gradient(90deg, #FFD700 0%, #FFB300 100%);
+      color: #fff8dc;
+      font-size: 2.2em;
+      font-weight: bold;
+      letter-spacing: 2px;
+      padding: 16px 36px;
+      border-radius: 40px;
+      box-shadow: 0 4px 18px rgba(255,215,0,0.18);
+      text-shadow: 1px 2px 8px #bfa100, 0 1px 0 #fff;
+      animation: sparkle 1.5s infinite alternate;
+    ">
+      🎉 Celebrating <span style="color:#FFD700;">25 Years!</span> 🎉
+    </span>
+  </div>
+</body>
+</html>

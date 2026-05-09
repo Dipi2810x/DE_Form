@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Engineering/Computer Science Project Assessment Form</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .eng-info {
+      text-align: center;
+      color: #f0f4f8;
+      background: #1b3a5d;
+      border-radius: 10px;
+      padding: 18px 12px 8px 12px;
+      margin: 0 auto 18px auto;
+      max-width: 700px;
+      box-shadow: 0 2px 12px rgba(30,60,120,0.10);
+    }
+    .eng-info h3, .eng-info h4, .eng-info p {
+      margin: 8px 0;
+      color: #7ec4cf;
+    }
+    .eng-info p {
+      color: #f0f4f8;
+      font-size: 1em;
+    }
+    fieldset {
+      background: #112d4e;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 24px;
+      padding: 18px 18px 10px 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    legend {
+      color: #7ec4cf;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .dropdown-section {
+      margin-bottom: 16px;
+    }
+    .dropdown-label {
+      display: block;
+      margin-bottom: 6px;
+      color: #7ec4cf;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      background: #1b3a5d;
+      color: #f0f4f8;
+      font-size: 1em;
+      margin-bottom: 8px;
+      resize: vertical;
+    }
+    select:focus, textarea:focus {
+      outline: 2px solid #7ec4cf;
+    }
+    textarea {
+      min-height: 60px;
+      max-height: 200px;
+    }
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    @media (max-width: 700px) {
+      .eng-info, fieldset {
+        max-width: 98vw;
+        padding: 8px 2vw;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Engineering/Computer Science Project Assessment Form</h2>
+  <form id="eng-form">
+    <!-- 1. Introduction -->
+    <fieldset>
+      <legend>1. Introduction (12 marks)</legend>
+      
+      <div class="dropdown-section">
+      <label class="dropdown-label" for="1.1">1. Key concepts are introduced, providing a good background to topic.<br>&nbsp;&nbsp;&nbsp;&nbsp;Relevant literature are reviewed:</label>
+      <select id="1.1" name="1.1" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="1.2">2. Problem/Issue/phenomena identified. Purpose/aim is clear. Research Question stated:</label>
+      <select id="1.2" name="1.2" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="1.3">3. Engineering Goals or Design Goals correct, achievable, and measurable:</label>
+      <select id="1.3" name="1.3" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+    </fieldset>
+
+    <div class="section-total" id="section1-total" style="text-align:right; font-weight:bold; color:#FFD700; margin-bottom:16px;">
+      Section 1 Total: 0
+    </div>
+
+    <!-- 2. Method -->
+    <legend>2. Method (16 marks)</legend>
+    <fieldset>
+      <div class="dropdown-section">
+      <label class="dropdown-label" for="2.4">4. Design criteria of prototype(s)/processes/program(s) or codes/platforms are clear & align to the goal:</label>
+      <select id="2.4" name="2.4" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="2.5">5. Procedure includes types of material, measurements, and units.<br>&nbsp;&nbsp;&nbsp;&nbsp;Understands different coding, interfaces and platforms:</label>
+      <select id="2.5" name="2.5" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="2.6">6. Prototype(s)/Solutions are illustrated/explained with diagrams, plans and/or flow charts<br>&nbsp;&nbsp;&nbsp;&nbsp;Evidence of design-test-redesign-retest using different approaches/materials/processes/methods:</label>
+      <select id="2.6" name="2.6" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="2.7">7. Number of trials/testing of prototypes/codes/platforms are adequate and accurate:</label>
+      <select id="2.7" name="2.7" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+    </fieldset>
+
+    <div class="section-total" id="section2-total" style="text-align:right; font-weight:bold; color:#FFD700; margin-bottom:16px;">
+      Section 2 Total: 0
+    </div>
+
+    <!-- 3. Results, Discussion, Conclusion, Limitations, Further Research -->
+    <legend>3. Results, Discussion, Conclusion, Limitations, Further Research (28 marks)</legend>
+    <fieldset>
+      <div class="dropdown-section">
+        <label class="dropdown-label" for="3.8">8. Data presentation appropriate: tables / graphs / diagrams / descriptions / lists</label>
+      <select id="3.8" name="3.8" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="3.9">9. Discussion aligned with aim / purpose, Discussion of results is substantial and logical<br>&nbsp;&nbsp;&nbsp;&nbsp;Significance / value of results explained</label>
+      <select id="3.9" name="3.9" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="3.10">10. Cites literature, Compares findings to other studies</label>
+      <select id="3.10" name="3.10" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="3.11">11. References are correct in text. References are correct in Bibliography/Reference section</label>
+      <select id="3.11" name="3.11" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="3.12">12. Possible ethics infringements are identified and mitigating measures are indicated. Potential safety issues are identified and precautions to be taken are listed. No evidence of plagiarism of ideas, text, images or any part of the research</label>
+      <select id="3.12" name="3.12" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="3.13">13. Poster is a clear logical summary of research. Correct headings are used (Introduction, Literature Review, Method, Results, etc.)</label>
+      <select id="3.13" name="3.13" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="3.14">14. Learner can use Poster and/or Prototype to explain research</label>
+      <select id="3.14" name="3.14" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+    </div>
+    </fieldset>
+
+    <div class="section-total" id="section3-total" style="text-align:right; font-weight:bold; color:#FFD700; margin-bottom:16px;">
+      Section 3 Total: 0
+    </div>
+
+    <!-- 4. Originality, Creativity and Value -->
+    <legend>4. Originality, Creativity and Value (12 marks)</legend>
+    <fieldset>
+        <div class="dropdown-section">
+        <label class="dropdown-label" for="4.15">15. Authenticity i.e. evidence that it is the learner(s) own work</label>
+        <select id="4.15" name="4.15" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+
+        <div class="dropdown-section">
+            <label class="dropdown-label" for="4.16">16. Journal is presented. Journal shows progression of research</label>
+            <select id="4.16" name="4.16" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+        </div>
+
+    <fieldset>
+      <legend>Please comment on</legend>
+    
+      <div class="dropdown-section">
+        <label class="dropdown-label" for="extr_2">Improvements suggested:</label>
+        <textarea name="extr_2" id="extr_2" required></textarea>
+      </div>
+    </fieldset>
+
+    <div class="final-total" id="final-total" style="text-align:right; font-size:1.3em; font-weight:bold; color:#FFD700; margin:24px 0;">
+      Final Mark: 0
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit">Submit</button>
+      <button type="button" id="backBtn">Back</button>
+    </div>
+  </form>
+  <script>
+    // Prefill marking fields if data exists
+    const saved = JSON.parse(sessionStorage.getItem('engMarkingData') || '{}');
+    for (const [key, value] of Object.entries(saved)) {
+      const el = document.getElementById('eng-form').elements[key];
+      if (el) el.value = value;
+    }
+
+    function getInt(val) {
+      return parseInt(val) || 0;
+    }
+
+    function updateTotals() {
+      const form = document.getElementById('eng-form');
+      // Section 1: 1.1, 1.2, 1.3
+      const s1 = getInt(form["1.1"].value) + getInt(form["1.2"].value) + getInt(form["1.3"].value);
+      document.getElementById('section1-total').textContent = "Section 1 Total: " + s1;
+
+      // Section 2: 2.4, 2.5, 2.6, 2.7
+      const s2 = getInt(form["2.4"].value) + getInt(form["2.5"].value) + getInt(form["2.6"].value) + getInt(form["2.7"].value);
+      document.getElementById('section2-total').textContent = "Section 2 Total: " + s2;
+
+      // Section 3: 3.8 - 3.14
+      let s3 = 0;
+      for (let i = 8; i <= 14; i++) s3 += getInt(form["3." + i].value);
+      document.getElementById('section3-total').textContent = "Section 3 Total: " + s3;
+
+      // Section 4: 4.15 - 4.17
+      let s4 = 0;
+      for (let i = 15; i <= 17; i++) s4 += getInt(form["4." + i].value);
+      document.getElementById('section4-total').textContent = "Section 4 Total: " + s4;
+
+      // Section 5: 5.18, 5.19
+      const s5 = getInt(form["5.18"].value) + getInt(form["5.19"].value);
+      document.getElementById('section5-total').textContent = "Section 5 Total: " + s5;
+
+      // Section 6: 6.21 - 6.25
+      let s6 = 0;
+      for (let i = 21; i <= 25; i++) s6 += getInt(form["6." + i].value);
+      document.getElementById('section6-total').textContent = "Section 6 Total: " + s6;
+
+      // Final total
+      const final = s1 + s2 + s3 + s4 + s5 + s6;
+      document.getElementById('final-total').textContent = "Final Mark: " + final;
+    }
+
+    document.getElementById('eng-form').addEventListener('input', updateTotals);
+    window.addEventListener('DOMContentLoaded', updateTotals);
+
+    // Back button logic
+    document.getElementById('backBtn').onclick = function() {
+      // Save current marking fields before going back
+      const markingData = {};
+      Array.from(document.getElementById('eng-form').elements).forEach(el => {
+        if (el.name) markingData[el.name] = el.value;
+      });
+      sessionStorage.setItem('engMarkingData', JSON.stringify(markingData));
+      window.location.href = "form.html";
+    };
+
+    // Column order as per your prompt
+    const columnOrder = [
+      "project_id","region","judges_name","conveners_name","date","school",
+      "learner1_name","learner1_surname","learner1_grade",
+      "learner2_name","learner2_surname","learner2_grade",
+      "project_title","project_type","category",
+      "1.1","1.2","1.3","2.4","2.5","2.6","2.7",
+      "3.8","3.9","3.10","3.11","3.12","3.13","3.14",
+      "4.15","4.16","4.17","5.18","5.19",
+      "6.20","6.21","6.22","6.23","6.24","6.25",
+      "extr_1","extr_2","extr_3"
+    ];
+
+    // Explicit mapping (if needed, but here it's 1:1)
+    const fieldMap = {};
+    columnOrder.forEach(col => fieldMap[col] = col);
+
+    document.getElementById('eng-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      // Save marking fields
+      const markingData = {};
+      Array.from(this.elements).forEach(el => {
+        if (el.name) markingData[el.name] = el.value;
+      });
+      sessionStorage.setItem('engMarkingData', JSON.stringify(markingData));
+
+      // Get main form data
+      const mainFormData = JSON.parse(sessionStorage.getItem('mainFormData') || '{}');
+
+      // Merge all data
+      const mergedData = { ...mainFormData, ...markingData };
+
+      // Build the object to submit, ensuring correct column order and keys
+      const dataToSubmit = {};
+      columnOrder.forEach(col => {
+        dataToSubmit[fieldMap[col]] = mergedData[col] !== undefined ? mergedData[col] : "";
+      });
+
+      try {
+        await fetch('https://sheetdb.io/api/v1/rn4vpf7g0o20e', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: dataToSubmit })
+        });
+        alert('Form submitted!');
+        sessionStorage.removeItem('mainFormData');
+        sessionStorage.removeItem('engMarkingData');
+        window.location.href = 'index.html';
+      } catch (err) {
+        alert('Error submitting form: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>

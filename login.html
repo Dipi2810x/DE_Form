@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div style="text-align:center; margin-top:32px;">
+    <img src="logo.png" alt="Logo" style="max-width:800px; height:auto;">
+  </div>
+  <form id="loginForm" style="max-width:400px;margin:100px auto;">
+    <h2>Dashboard Login</h2>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:16px;">
+      <button type="submit">Login</button>
+      <button type="button" onclick="window.location.href='index.html'">Back to Home</button>
+    </div>
+  </form>
+  <script>
+    document.getElementById('loginForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      try {
+        const res = await fetch('https://sheetdb.io/api/v1/rn4vpf7g0o20e');
+        const data = await res.json();
+        const found = data.find(row =>
+          (row.login_username || '').trim() === username &&
+          (row.login_password || '').trim() === password
+        );
+        if (found) {
+          sessionStorage.setItem('dashboard_auth', 'yes');
+          window.location.href = 'dashboard.html';
+        } else {
+          alert('Incorrect username or password!');
+        }
+      } catch (err) {
+        alert('Login error: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>

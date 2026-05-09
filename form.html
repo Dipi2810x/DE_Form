@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submit Form</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .dropdown-label {
+      display: block;
+      margin-bottom: 6px;
+      color: #7ec4cf;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      background: #1b3a5d;
+      color: #f0f4f8;
+      font-size: 1em;
+      margin-bottom: 8px;
+    }
+    select:focus {
+      outline: 2px solid #7ec4cf;
+    }
+    .dropdown-section {
+      background: #112d4e;
+      padding: 16px 12px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+  </style>
+</head>
+<body>
+  <h2>Project Assesment Form</h2>
+  <form id="form">
+    <div class="form-group">
+      <input type="text" name="learner1_name" placeholder="Learner 1 Name" required />
+    </div>
+    <div class="form-group">
+      <input type="text" name="learner1_surname" placeholder="Learner 1 Surname" required />
+    </div>
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="learner1_grade">Learner 1 Grade</label>
+      <select id="learner1_grade" name="learner1_grade" required>
+        <option value="" disabled selected>Select grade</option>
+        <option value="4">Grade 4</option>
+        <option value="5">Grade 5</option>
+        <option value="6">Grade 6</option>
+        <option value="7">Grade 7</option>
+        <option value="8">Grade 8</option>
+        <option value="9">Grade 9</option>
+        <option value="10">Grade 10</option>
+        <option value="11">Grade 11</option>
+        <option value="12">Grade 12</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="text" name="learner2_name" placeholder="Learner 2 Name" />
+    </div>
+    <div class="form-group">
+      <input type="text" name="learner2_surname" placeholder="Learner 2 Surname" />
+    </div>
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="learner2_grade">Learner 2 Grade</label>
+      <select id="learner2_grade" name="learner2_grade">
+        <option value="" disabled selected>Select grade</option>
+        <option value="4">Grade 4</option>
+        <option value="5">Grade 5</option>
+        <option value="6">Grade 6</option>
+        <option value="7">Grade 7</option>
+        <option value="8">Grade 8</option>
+        <option value="9">Grade 9</option>
+        <option value="10">Grade 10</option>
+        <option value="11">Grade 11</option>
+        <option value="12">Grade 12</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="text" name="project_title" placeholder="Project Title" required />
+    </div>
+    <div class="form-group">
+      <input type="text" name="school" placeholder="School" required />
+    </div>
+    <div class="form-group">
+      <input type="text" name="judges_name" placeholder="Judge's Name" required />
+    </div>
+    
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="category-dropdown">Project Category</label>
+      <select id="category-dropdown" name="category" required>
+        <option value="" disabled selected>Select category</option>
+        <option value="Agricultural Sciences">Agricultural Sciences</option>
+        <option value="Animal Sciences">Animal Sciences</option>
+        <option value="Biomedical and Medical Sciences">Biomedical and Medical Sciences</option>
+        <option value="Chemistry and biochemistry">Chemistry and biochemistry</option>
+        <option value="Computer science and software development">Computer science and software Development</option>
+        <option value="Earth Sciences">Earth Sciences</option>
+        <option value="Energy">Energy</option>
+        <option value="Engineering">Engineering</option>
+        <option value="Environmental studies">Environmental Studies</option>
+        <option value="Mathematics">Mathematics</option>
+        <option value="Plant Sciences">Plant Sciences</option>
+        <option value="Physics, Astronomy and Space Sciences">Physics, Astronomy and Space Sciences</option>
+        <option value="Social Sciences">Social Sciences</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <input type="text" name="project_id" placeholder="Project ID" required />
+    </div>
+   
+    <div class="dropdown-section">
+      <label class="dropdown-label" for="project-type-dropdown">Project Type</label>
+      <select id="project-type-dropdown" name="project_type" required>
+        <option value="" disabled selected>Select project type</option>
+        <option value="Engineering/Computer Science">Engineering/Computer Science</option>
+        <option value="Mathematics/Theoretical">Mathematics/Theoretical</option>
+        <option value="Scientific Investigation">Scientific Investigation</option>
+        <option value="Social Sciences">Social Sciences</option>
+      </select>
+    </div>
+    
+    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+      <button type="button" id="nextBtn">Next</button>
+      <button type="button" onclick="window.location.href='index.html'">Back to Home</button>
+    </div>
+  </form>
+  <script>
+const form = document.getElementById('form');
+
+// Prefill fields if data exists
+const saved = JSON.parse(sessionStorage.getItem('mainFormData') || '{}');
+for (const [key, value] of Object.entries(saved)) {
+  const el = form.elements[key];
+  if (el) el.value = value;
+}
+
+document.getElementById('nextBtn').onclick = function() {
+  const formData = {};
+  Array.from(form.elements).forEach(el => {
+    if (el.name) formData[el.name] = el.value;
+  });
+  sessionStorage.setItem('mainFormData', JSON.stringify(formData));
+
+  // Redirect based on project type
+  const type = formData.project_type;
+  if (type === "Engineering/Computer Science") {
+    window.location.href = "engineering.html";
+  } else if (type === "Mathematics/Theoretical") {
+    window.location.href = "mathematics.html";
+  } else if (type === "Scientific Investigation") {
+    window.location.href = "scientific.html";
+  } else if (type === "Social Sciences") {
+    window.location.href = "social_sciences.html";
+  } else {
+    alert("Please select a valid project type.");
+  }
+};
+  </script>
+</body>
+</html>
