@@ -300,7 +300,7 @@
       window.location.href = "form.html";
     };
 
-    // Column order as per your prompt
+    // Column order used for SheetDB submission (adjusted to your Sheet headers)
     const columnOrder = [
       "project_id","region","judges_name","conveners_name","date","school",
       "learner1_name","learner1_surname","learner1_grade",
@@ -340,7 +340,7 @@
       });
 
       try {
-        await fetch('https://sheetdb.io/api/v1/rn4vpf7g0o20e', {
+        await fetch('https://sheetdb.io/api/v1/e4hatzxy7uh7d', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ data: dataToSubmit })
