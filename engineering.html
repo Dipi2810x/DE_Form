@@ -85,7 +85,7 @@
   <form id="eng-form">
     <!-- 1. Introduction -->
     <fieldset>
-      <legend>1. Introduction (12 marks)</legend>
+      <legend>1. Introduction</legend>
       
       <div class="dropdown-section">
       <label class="dropdown-label" for="1.1">1. Key concepts are introduced, providing a good background to topic.<br>&nbsp;&nbsp;&nbsp;&nbsp;Relevant literature are reviewed:</label>
@@ -114,7 +114,7 @@
     </div>
 
     <!-- 2. Method -->
-    <legend>2. Method (16 marks)</legend>
+    <legend>2. Method</legend>
     <fieldset>
       <div class="dropdown-section">
       <label class="dropdown-label" for="2.4">4. Design criteria of prototype(s)/processes/program(s) or codes/platforms are clear & align to the goal:</label>
@@ -150,7 +150,7 @@
     </div>
 
     <!-- 3. Results, Discussion, Conclusion, Limitations, Further Research -->
-    <legend>3. Results, Discussion, Conclusion, Limitations, Further Research (28 marks)</legend>
+    <legend>3. Results, Discussion, Conclusion, Limitations, Further Research</legend>
     <fieldset>
       <div class="dropdown-section">
         <label class="dropdown-label" for="3.8">8. Data presentation appropriate: tables / graphs / diagrams / descriptions / lists</label>
@@ -207,27 +207,45 @@
     </div>
 
     <!-- 4. Originality, Creativity and Value -->
-    <legend>4. Originality, Creativity and Value (12 marks)</legend>
     <fieldset>
-        <div class="dropdown-section">
+      <legend>4. Originality, Creativity and Value</legend>
+      <div class="dropdown-section">
         <label class="dropdown-label" for="4.15">15. Authenticity i.e. evidence that it is the learner(s) own work</label>
         <select id="4.15" name="4.15" required>
           <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
         </select>
-
-        <div class="dropdown-section">
-            <label class="dropdown-label" for="4.16">16. Journal is presented. Journal shows progression of research</label>
-            <select id="4.16" name="4.16" required>
+      </div>
+      <div class="dropdown-section">
+        <label class="dropdown-label" for="4.16">16. Journal is presented. Journal shows progression of research</label>
+        <select id="4.16" name="4.16" required>
           <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
         </select>
-        </div>
+      </div>
+      <div class="dropdown-section">
+        <label class="dropdown-label" for="4.17">17. Study that finds a new or improved solution or method or contributes to new knowledge</label>
+        <select id="4.17" name="4.17" required>
+          <option value="" disabled selected>Select</option><option value="1">Yes</option><option value="0">No</option>
+        </select>
+      </div>
+    </fieldset>
+
+    <div class="section-total" id="section4-total" style="text-align:right; font-weight:bold; color:#FFD700; margin-bottom:16px;">
+      Section 4 Total: 0
+    </div>
 
     <fieldset>
       <legend>Please comment on</legend>
-    
+      <div class="dropdown-section">
+        <label class="dropdown-label" for="extr_1">Plagiarism or other ethics violations:</label>
+        <textarea name="extr_1" id="extr_1" required></textarea>
+      </div>
       <div class="dropdown-section">
         <label class="dropdown-label" for="extr_2">Improvements suggested:</label>
         <textarea name="extr_2" id="extr_2" required></textarea>
+      </div>
+      <div class="dropdown-section">
+        <label class="dropdown-label" for="extr_3">Mentor recommended:</label>
+        <textarea name="extr_3" id="extr_3" required></textarea>
       </div>
     </fieldset>
 
@@ -255,35 +273,51 @@
     function updateTotals() {
       const form = document.getElementById('eng-form');
       // Section 1: 1.1, 1.2, 1.3
-      const s1 = getInt(form["1.1"].value) + getInt(form["1.2"].value) + getInt(form["1.3"].value);
-      document.getElementById('section1-total').textContent = "Section 1 Total: " + s1;
+      let s1 = 0; ["1.1","1.2","1.3"].forEach(k => { const el = form[k]; if (el) s1 += getInt(el.value); });
+      const s1el = document.getElementById('section1-total'); if (s1el) s1el.textContent = "Section 1 Total: " + s1;
 
       // Section 2: 2.4, 2.5, 2.6, 2.7
-      const s2 = getInt(form["2.4"].value) + getInt(form["2.5"].value) + getInt(form["2.6"].value) + getInt(form["2.7"].value);
-      document.getElementById('section2-total').textContent = "Section 2 Total: " + s2;
+      let s2 = 0; ["2.4","2.5","2.6","2.7"].forEach(k => { const el = form[k]; if (el) s2 += getInt(el.value); });
+      const s2el = document.getElementById('section2-total'); if (s2el) s2el.textContent = "Section 2 Total: " + s2;
 
       // Section 3: 3.8 - 3.14
       let s3 = 0;
-      for (let i = 8; i <= 14; i++) s3 += getInt(form["3." + i].value);
-      document.getElementById('section3-total').textContent = "Section 3 Total: " + s3;
+      for (let i = 8; i <= 14; i++){
+        const el = form["3." + i];
+        if (el) s3 += getInt(el.value);
+      }
+      const s3el = document.getElementById('section3-total');
+      if (s3el) s3el.textContent = "Section 3 Total: " + s3;
 
       // Section 4: 4.15 - 4.17
       let s4 = 0;
-      for (let i = 15; i <= 17; i++) s4 += getInt(form["4." + i].value);
-      document.getElementById('section4-total').textContent = "Section 4 Total: " + s4;
+      for (let i = 15; i <= 17; i++){
+        const el = form["4." + i];
+        if (el) s4 += getInt(el.value);
+      }
+      const s4el = document.getElementById('section4-total');
+      if (s4el) s4el.textContent = "Section 4 Total: " + s4;
 
       // Section 5: 5.18, 5.19
-      const s5 = getInt(form["5.18"].value) + getInt(form["5.19"].value);
-      document.getElementById('section5-total').textContent = "Section 5 Total: " + s5;
+      let s5 = 0; ["5.18","5.19"].forEach(k => { const el = form[k]; if (el) s5 += getInt(el.value); });
+      const s5el = document.getElementById('section5-total'); if (s5el) s5el.textContent = "Section 5 Total: " + s5;
 
       // Section 6: 6.21 - 6.25
       let s6 = 0;
-      for (let i = 21; i <= 25; i++) s6 += getInt(form["6." + i].value);
-      document.getElementById('section6-total').textContent = "Section 6 Total: " + s6;
+      for (let i = 21; i <= 25; i++){
+        const el = form["6." + i]; if (el) s6 += getInt(el.value);
+      }
+      const s6el = document.getElementById('section6-total'); if (s6el) s6el.textContent = "Section 6 Total: " + s6;
 
-      // Final total
+      // Final total (and scaled display out of 16 with percentage)
       const final = s1 + s2 + s3 + s4 + s5 + s6;
-      document.getElementById('final-total').textContent = "Final Mark: " + final;
+      // compute maxTotal dynamically from present fields
+      let maxTotal = 0;
+      ["1.1","1.2","1.3","2.4","2.5","2.6","2.7","3.8","3.9","3.10","3.11","3.12","3.13","3.14","4.15","4.16","4.17","5.18","5.19","6.20","6.21","6.22","6.23","6.24","6.25"].forEach(k => { if (form[k]) maxTotal++; });
+      if (maxTotal === 0) maxTotal = 1;
+      const scaled = Math.round((final / maxTotal) * 16);
+      const percent = (final / maxTotal) * 100;
+      document.getElementById('final-total').innerHTML = "Final Mark: " + scaled + " / 16<br><div id='final-percent' style='font-size:0.95em; font-weight:normal; color:#FFFFFF;'>Percentage: " + percent.toFixed(1) + "%</div>";
     }
 
     document.getElementById('eng-form').addEventListener('input', updateTotals);
